@@ -1,0 +1,57 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  Ec2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      #InstanceType: t3.large
+      InstanceType: m5.4xlarge
+      # register your snapshot as AMI before using it here 
+      #ImageId: "ami-0a07be880014c7b8e"
+      ImageId: "ami-06b91f329ae1f91de"
+      # create or import your SSH key into the region before using it here
+      #KeyName: linux-test-vpn
+      KeyName: palo-alto-fw
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 50
+        - DeviceName: /dev/sdm
+          Ebs:
+            VolumeSize: 100
+      NetworkInterfaces: 
+        -
+            NetworkInterfaceId: !Ref NIC1
+            DeviceIndex: 0
+        -
+            NetworkInterfaceId: !Ref NIC2
+            DeviceIndex: 1
+      Tags:
+        -
+          Key: Name
+          Value: Recovery_Test
+
+  NIC1:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+        Tags:
+        - Key: Name
+          Value: "NIC1"
+        Description: NIC1
+        SourceDestCheck: 'false'
+        GroupSet:
+        - sg-0088b2c9a112ec650
+        SubnetId: subnet-05e67923a64d51e77
+        PrivateIpAddress: 172.31.0.96
+  NIC2:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+        Tags:
+        - Key: Name
+          Value: "NIC2"
+        Description: NIC2
+        SourceDestCheck: 'false'
+        GroupSet:
+        - sg-0088b2c9a112ec650
+        SubnetId: subnet-05e67923a64d51e77
+        PrivateIpAddress: 172.31.0.100
