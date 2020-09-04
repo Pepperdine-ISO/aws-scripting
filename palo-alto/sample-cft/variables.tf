@@ -10,16 +10,16 @@ variable "secret_key" {
 
 # AWS Region and Availablility Zone
 variable "region" {
-    default = "us-east-1"
+    default = "us-west-2"
 }
 
 variable "availability_zone" {
-    default = "us-east-1e"
+    default = "us-west-2a"
 }
 
 # VPC configuration
 variable "vpc_cidr_block" {
-    default = "10.88.0.0/16"
+    default = "10.67.240.0/23"
 }
 
 variable "vpc_instance_tenancy" {
@@ -32,17 +32,22 @@ variable "vpc_name" {
 
 # Management subnet configuration
 variable "mgmt_subnet_cidr_block" {
-    default = "10.88.0.0/24"
+    default = "10.67.240.32/28"
 }
 
 # Untrust subnet configuration
 variable "untrust_subnet_cidr_block" {
-    default = "10.88.1.0/24"
+    default = "10.67.240.224/27"
 }
 
 # Trust subnet configuration
 variable "trust_subnet_cidr_block" {
-    default = "10.88.66.0/24"
+    default = "10.67.240.16/28"
+}
+
+# PAN public services subnet configuration
+variable "publicsrv_subnet_cidr_block" {
+    default = "10.67.241.0/24"
 }
 
 # PAVM configuration
@@ -83,7 +88,7 @@ variable "pavm_byol_ami_id" {
 }
 
 variable "pavm_instance_type" {
-    default = "c4.xlarge"
+    default = "m5.4xlarge"
 }
 
 variable "pavm_key_name" {
@@ -101,15 +106,19 @@ variable "pavm_public_ip" {
 }
 
 variable "pavm_mgmt_private_ip" {
-    default = "10.88.0.200"
+    default = "10.67.240.36"
 }
 
 variable "pavm_untrust_private_ip" {
-    default = "10.88.1.210"
+    default = "10.67.240.228"
 }
 
 variable "pavm_trust_private_ip" {
-    default = "10.88.66.220"
+    default = "10.67.240.20"
+}
+
+variable "pavm_publicsrv_private_ip" {
+    default = "10.67.241.4"
 }
 
 variable pavm_bootstrap_s3 {
